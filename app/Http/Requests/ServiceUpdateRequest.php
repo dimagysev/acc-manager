@@ -25,7 +25,7 @@ class ServiceUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255|unique:services'
+            'name' => 'required|string|max:255|unique:services,id,' . $this->segment(3)
         ];
     }
 }

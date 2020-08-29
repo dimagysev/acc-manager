@@ -1,6 +1,6 @@
 <template>
     <div class="wrap">
-        <span class="text-center">Add Account</span>
+        <span class="text-center text-uppercase">Add Account</span>
         <div class="wrap-content">
             <v-form
                 ref="form"
@@ -58,7 +58,7 @@
 
 <script>
 
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
     name: "AddAccount",
@@ -72,6 +72,7 @@ export default {
     },
     computed: mapGetters(['services']),
     methods: {
+        ...mapMutations(['stopLoading']),
         ...mapActions(['createAccount']),
         add () {
             if (this.$refs.form.validate()){
@@ -79,7 +80,7 @@ export default {
                     login: this.login,
                     password: this.password,
                     service_id: this.serviceId
-                })
+                }).then(() => this.stopLoading())
                 this.reset()
             }
         },

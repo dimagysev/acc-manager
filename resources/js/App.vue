@@ -28,6 +28,7 @@ export default {
                     position:'top-right',
                 })
             }
+            this.$store.commit('stopLoading')
             this.$store.commit('clearError')
         }
     }

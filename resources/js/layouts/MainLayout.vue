@@ -1,9 +1,11 @@
 <template>
     <v-app id="inspire" >
         <v-navigation-drawer v-model="drawer" disable-resize-watcher app>
-            <add-account/>
-            <v-spacer/>
-            <add-service/>
+            <div>
+                <add-account style="margin-bottom: 3rem"/>
+                <hr>
+                <add-service style="margin-top: 3rem"/>
+            </div>
         </v-navigation-drawer>
 
         <v-app-bar app color="indigo">

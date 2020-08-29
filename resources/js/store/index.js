@@ -9,12 +9,14 @@ export const store = new Vuex.Store({
         token: localStorage.getItem('access_token') || null,
         currentService: 'all',
         error: null,
+        loading: false
     },
     getters:{
         currentService: state => state.currentService,
         getToken: state => state.token,
         isAuth: state => !!state.token,
-        error: state => state.error
+        error: state => state.error,
+        isLoading: state => !!state.loading
     },
     mutations:{
         setError (state, error) {
@@ -34,6 +36,12 @@ export const store = new Vuex.Store({
         logout (state) {
             localStorage.removeItem('access_token')
             state.token = null
+        },
+        startLoading (state) {
+            state.loading = true
+        },
+        stopLoading (state) {
+            state.loading = false
         }
     },
     actions:{
@@ -46,7 +54,7 @@ export const store = new Vuex.Store({
                 commit('setToken', data.token)
             }catch (e){
                 commit('setError', e)
-                return Promise.reject(e)
+                throw e
             }
         },
         async register ({ commit }, credentials) {
@@ -57,7 +65,7 @@ export const store = new Vuex.Store({
                 commit('setToken', data.token)
             }catch (e) {
                 commit('setError', e)
-                return Promise.reject(e)
+                throw e
             }
         },
         async logout ({ commit }) {
@@ -66,7 +74,7 @@ export const store = new Vuex.Store({
                 commit('logout')
             } catch (e) {
                 commit('setError', e)
-                return Promise.reject(e)
+                throw e
             }
         },
         parseError({ commit }, e) {

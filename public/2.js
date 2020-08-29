@@ -176,13 +176,13 @@ var render = function() {
       _c(
         "v-card-actions",
         [
+          _c("v-spacer"),
+          _vm._v(" "),
           _c(
             "v-btn",
             { attrs: { color: "primary" }, on: { click: _vm.register } },
             [_vm._v("SingUp")]
           ),
-          _vm._v(" "),
-          _c("v-spacer"),
           _vm._v(" "),
           _c(
             "v-btn",

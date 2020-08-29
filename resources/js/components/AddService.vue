@@ -41,7 +41,7 @@
 
 <script>
 
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
     name: "AddService",
@@ -52,10 +52,12 @@ export default {
         }
     },
     methods: {
+        ...mapMutations(['stopLoading']),
         ...mapActions(['createService']),
         add () {
             if (this.$refs.form.validate()){
                 this.createService({ name: this.service })
+                    .then(() => this.stopLoading())
                 this.reset()
             }
         },
@@ -68,8 +70,6 @@ export default {
 
 <style scoped lang="scss">
 .wrap {
-    margin-top:25px;
-
     & span{
         display: block;
         font-size: 1.5rem;

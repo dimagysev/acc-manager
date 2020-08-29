@@ -2095,9 +2095,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.t0.error.call(_context.t0, _context.t1, _context.t2);
 
               case 7:
+                _this.$store.commit('stopLoading');
+
                 _this.$store.commit('clearError');
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -2196,13 +2198,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['services']),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['createAccount'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['stopLoading'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['createAccount'])), {}, {
     add: function add() {
+      var _this = this;
+
       if (this.$refs.form.validate()) {
         this.createAccount({
           login: this.login,
           password: this.password,
           service_id: this.serviceId
+        }).then(function () {
+          return _this.stopLoading();
         });
         this.reset();
       }
@@ -2281,11 +2287,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       service: ''
     };
   },
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['createService'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['stopLoading'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['createService'])), {}, {
     add: function add() {
+      var _this = this;
+
       if (this.$refs.form.validate()) {
         this.createService({
           name: this.service
+        }).then(function () {
+          return _this.stopLoading();
         });
         this.reset();
       }
@@ -2350,6 +2360,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_AddAccount__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/AddAccount */ "./resources/js/components/AddAccount.vue");
 /* harmony import */ var _components_AddService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/AddService */ "./resources/js/components/AddService.vue");
+//
+//
 //
 //
 //
@@ -6859,7 +6871,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".wrap[data-v-3db7417f] {\n  margin-top: 25px;\n}\n.wrap span[data-v-3db7417f] {\n  display: block;\n  font-size: 1.5rem;\n  width: 100%;\n  padding: 5px;\n  border-bottom: 1px solid #cccccc;\n}\n.wrap .wrap-content[data-v-3db7417f] {\n  padding: 5px;\n}", ""]);
+exports.push([module.i, ".wrap span[data-v-3db7417f] {\n  display: block;\n  font-size: 1.5rem;\n  width: 100%;\n  padding: 5px;\n  border-bottom: 1px solid #cccccc;\n}\n.wrap .wrap-content[data-v-3db7417f] {\n  padding: 5px;\n}", ""]);
 
 // exports
 
@@ -39536,7 +39548,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "wrap" }, [
-    _c("span", { staticClass: "text-center" }, [_vm._v("Add Account")]),
+    _c("span", { staticClass: "text-center text-uppercase" }, [
+      _vm._v("Add Account")
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -39849,13 +39863,18 @@ var render = function() {
           }
         },
         [
-          _c("add-account"),
-          _vm._v(" "),
-          _c("v-spacer"),
-          _vm._v(" "),
-          _c("add-service")
-        ],
-        1
+          _c(
+            "div",
+            [
+              _c("add-account", { staticStyle: { "margin-bottom": "3rem" } }),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c("add-service", { staticStyle: { "margin-top": "3rem" } })
+            ],
+            1
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -100705,8 +100724,8 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.withCredentials = true;
-window.axios.defaults.baseURL = 'http://pass-manager.loc';
+window.axios.defaults.withCredentials = true; //window.axios.defaults.baseURL = ''
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -101216,7 +101235,7 @@ var account = {
       }
 
       return getters.accounts.filter(function (account) {
-        return account.service_id === rootState.currentService.id;
+        return account.service_id === parseInt(rootState.currentService.id);
       });
     }
   },
@@ -101251,32 +101270,34 @@ var account = {
               case 0:
                 commit = _ref.commit, dispatch = _ref.dispatch;
                 _context.prev = 1;
-                _context.next = 4;
+                commit('startLoading');
+                _context.next = 5;
                 return axios.post('/api/accounts', account);
 
-              case 4:
+              case 5:
                 response = _context.sent;
-                _context.next = 7;
+                _context.next = 8;
                 return response.data;
 
-              case 7:
+              case 8:
                 data = _context.sent;
                 commit('addAccount', data);
                 commit('incrementAccountsCount', data.service_id);
-                _context.next = 15;
+                _context.next = 17;
                 break;
 
-              case 12:
-                _context.prev = 12;
+              case 13:
+                _context.prev = 13;
                 _context.t0 = _context["catch"](1);
-                console.log(_context.t0.response);
+                commit('setError', _context.t0);
+                throw _context.t0;
 
-              case 15:
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 12]]);
+        }, _callee, null, [[1, 13]]);
       }))();
     },
     updateAccount: function updateAccount(_ref2, account) {
@@ -101288,34 +101309,36 @@ var account = {
               case 0:
                 commit = _ref2.commit;
                 _context2.prev = 1;
-                _context2.next = 4;
+                commit('startLoading');
+                _context2.next = 5;
                 return axios.put('/api/accounts/' + account.id, {
                   login: account.login,
                   password: account.password
                 });
 
-              case 4:
+              case 5:
                 response = _context2.sent;
-                _context2.next = 7;
+                _context2.next = 8;
                 return response.data;
 
-              case 7:
+              case 8:
                 data = _context2.sent;
                 commit('updateAccount', data);
-                _context2.next = 14;
+                _context2.next = 16;
                 break;
 
-              case 11:
-                _context2.prev = 11;
+              case 12:
+                _context2.prev = 12;
                 _context2.t0 = _context2["catch"](1);
-                console.log(_context2.t0.response);
+                commit('setError', _context2.t0);
+                throw _context2.t0;
 
-              case 14:
+              case 16:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[1, 11]]);
+        }, _callee2, null, [[1, 12]]);
       }))();
     },
     getAccounts: function getAccounts(_ref3) {
@@ -101327,31 +101350,33 @@ var account = {
               case 0:
                 commit = _ref3.commit;
                 _context3.prev = 1;
-                _context3.next = 4;
+                commit('startLoading');
+                _context3.next = 5;
                 return axios.get('/api/accounts');
 
-              case 4:
+              case 5:
                 response = _context3.sent;
-                _context3.next = 7;
+                _context3.next = 8;
                 return response.data;
 
-              case 7:
+              case 8:
                 data = _context3.sent;
                 commit('setAccounts', data);
-                _context3.next = 14;
+                _context3.next = 16;
                 break;
 
-              case 11:
-                _context3.prev = 11;
+              case 12:
+                _context3.prev = 12;
                 _context3.t0 = _context3["catch"](1);
-                console.log(_context3.t0.response);
+                commit('setError', _context3.t0);
+                throw _context3.t0;
 
-              case 14:
+              case 16:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[1, 11]]);
+        }, _callee3, null, [[1, 12]]);
       }))();
     },
     deleteAccount: function deleteAccount(_ref4, id) {
@@ -101363,32 +101388,34 @@ var account = {
               case 0:
                 commit = _ref4.commit;
                 _context4.prev = 1;
-                _context4.next = 4;
+                commit('startLoading');
+                _context4.next = 5;
                 return axios["delete"]('/api/accounts/' + id);
 
-              case 4:
+              case 5:
                 response = _context4.sent;
-                _context4.next = 7;
+                _context4.next = 8;
                 return response.data;
 
-              case 7:
+              case 8:
                 data = _context4.sent;
                 commit('deleteAccount', parseInt(data.id));
                 commit('decrementAccountsCount', parseInt(data.service_id));
-                _context4.next = 15;
+                _context4.next = 17;
                 break;
 
-              case 12:
-                _context4.prev = 12;
+              case 13:
+                _context4.prev = 13;
                 _context4.t0 = _context4["catch"](1);
-                console.log(_context4.t0.response);
+                commit('setError', _context4.t0);
+                throw _context4.t0;
 
-              case 15:
+              case 17:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[1, 12]]);
+        }, _callee4, null, [[1, 13]]);
       }))();
     }
   }
@@ -101428,7 +101455,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   state: {
     token: localStorage.getItem('access_token') || null,
     currentService: 'all',
-    error: null
+    error: null,
+    loading: false
   },
   getters: {
     currentService: function currentService(state) {
@@ -101442,6 +101470,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     },
     error: function error(state) {
       return state.error;
+    },
+    isLoading: function isLoading(state) {
+      return !!state.loading;
     }
   },
   mutations: {
@@ -101462,6 +101493,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     logout: function logout(state) {
       localStorage.removeItem('access_token');
       state.token = null;
+    },
+    startLoading: function startLoading(state) {
+      state.loading = true;
+    },
+    stopLoading: function stopLoading(state) {
+      state.loading = false;
     }
   },
   actions: {
@@ -101497,7 +101534,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
                 _context.prev = 14;
                 _context.t0 = _context["catch"](1);
                 commit('setError', _context.t0);
-                return _context.abrupt("return", Promise.reject(_context.t0));
+                throw _context.t0;
 
               case 18:
               case "end":
@@ -101538,7 +101575,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
                 _context2.prev = 13;
                 _context2.t0 = _context2["catch"](1);
                 commit('setError', _context2.t0);
-                return _context2.abrupt("return", Promise.reject(_context2.t0));
+                throw _context2.t0;
 
               case 17:
               case "end":
@@ -101569,7 +101606,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
                 _context3.prev = 7;
                 _context3.t0 = _context3["catch"](1);
                 commit('setError', _context3.t0);
-                return _context3.abrupt("return", Promise.reject(_context3.t0));
+                throw _context3.t0;
 
               case 11:
               case "end":
@@ -101680,31 +101717,33 @@ var service = {
               case 0:
                 commit = _ref.commit;
                 _context.prev = 1;
-                _context.next = 4;
+                commit('startLoading');
+                _context.next = 5;
                 return axios.get('/api/services');
 
-              case 4:
+              case 5:
                 response = _context.sent;
-                _context.next = 7;
+                _context.next = 8;
                 return response.data;
 
-              case 7:
+              case 8:
                 data = _context.sent;
                 commit('setServices', data);
-                _context.next = 14;
+                _context.next = 16;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](1);
                 commit('setError', _context.t0);
+                throw _context.t0;
 
-              case 14:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 11]]);
+        }, _callee, null, [[1, 12]]);
       }))();
     },
     createService: function createService(_ref2, service) {
@@ -101716,31 +101755,33 @@ var service = {
               case 0:
                 commit = _ref2.commit;
                 _context2.prev = 1;
-                _context2.next = 4;
+                commit('startLoading');
+                _context2.next = 5;
                 return axios.post('/api/services', service);
 
-              case 4:
+              case 5:
                 response = _context2.sent;
-                _context2.next = 7;
+                _context2.next = 8;
                 return response.data;
 
-              case 7:
+              case 8:
                 data = _context2.sent;
                 commit('addService', data);
-                _context2.next = 14;
+                _context2.next = 16;
                 break;
 
-              case 11:
-                _context2.prev = 11;
+              case 12:
+                _context2.prev = 12;
                 _context2.t0 = _context2["catch"](1);
                 commit('setError', _context2.t0);
+                throw _context2.t0;
 
-              case 14:
+              case 16:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[1, 11]]);
+        }, _callee2, null, [[1, 12]]);
       }))();
     },
     updateService: function updateService(_ref3, service) {
@@ -101752,33 +101793,35 @@ var service = {
               case 0:
                 commit = _ref3.commit;
                 _context3.prev = 1;
-                _context3.next = 4;
+                commit('startLoading');
+                _context3.next = 5;
                 return axios.put('/api/services/' + service.id, {
                   name: service.name
                 });
 
-              case 4:
+              case 5:
                 response = _context3.sent;
-                _context3.next = 7;
+                _context3.next = 8;
                 return response.data;
 
-              case 7:
+              case 8:
                 data = _context3.sent;
                 commit('updateService', data);
-                _context3.next = 14;
+                _context3.next = 16;
                 break;
 
-              case 11:
-                _context3.prev = 11;
+              case 12:
+                _context3.prev = 12;
                 _context3.t0 = _context3["catch"](1);
                 commit('setError', _context3.t0);
+                throw _context3.t0;
 
-              case 14:
+              case 16:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[1, 11]]);
+        }, _callee3, null, [[1, 12]]);
       }))();
     },
     deleteService: function deleteService(_ref4, serviceId) {
@@ -101790,33 +101833,35 @@ var service = {
               case 0:
                 commit = _ref4.commit, dispatch = _ref4.dispatch;
                 _context4.prev = 1;
-                _context4.next = 4;
+                commit('startLoading');
+                _context4.next = 5;
                 return axios["delete"]('/api/services/' + serviceId);
 
-              case 4:
+              case 5:
                 response = _context4.sent;
-                _context4.next = 7;
+                _context4.next = 8;
                 return response.data;
 
-              case 7:
+              case 8:
                 data = _context4.sent;
                 commit('deleteService', data.id);
                 commit('setCurrentService', 'all');
                 dispatch('getAccounts');
-                _context4.next = 16;
+                _context4.next = 18;
                 break;
 
-              case 13:
-                _context4.prev = 13;
+              case 14:
+                _context4.prev = 14;
                 _context4.t0 = _context4["catch"](1);
                 commit('setError', _context4.t0);
+                throw _context4.t0;
 
-              case 16:
+              case 18:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[1, 13]]);
+        }, _callee4, null, [[1, 14]]);
       }))();
     }
   }

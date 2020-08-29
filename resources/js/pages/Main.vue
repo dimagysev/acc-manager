@@ -1,6 +1,6 @@
 <template>
     <v-row class="fill-height">
-        <loader v-if="loading"></loader>
+        <loader v-if="isLoading"></loader>
         <v-col cols="12" sm="6" md="5" offset-md="1">
             <accounts-list/>
         </v-col>
@@ -14,20 +14,23 @@
 
 import ServiceList from "../components/ServiceList";
 import AccountsList from "../components/AccountsList";
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Loader from "../components/loaders/Loader";
 
 export default {
     name: "Main",
-    data: ()=>({
-        loading: true
-    }),
     components: { ServiceList, AccountsList, Loader},
-    methods: mapActions(['getServices', 'getAccounts']),
+    computed: mapGetters(['isLoading']),
+    methods: {
+        ...mapActions(['getServices', 'getAccounts']),
+        ...mapMutations(['startLoading', 'stopLoading'])
+
+    },
     mounted() {
         this.getServices()
             .then(()=>this.getAccounts())
-            .then(()=> this.loading = false)
+            .then(()=> this.stopLoading())
+            .catch(e=>{})
     }
 }
 </script>

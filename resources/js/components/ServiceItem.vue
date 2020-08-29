@@ -19,7 +19,7 @@
                     v-model="name"
                     class="mt-0 pt-0" />
             </span>
-            <v-btn x-small color="error" @click.stop="deleteService(service.id)">
+            <v-btn x-small color="error" @click.stop="deleteHandler">
                 <v-icon>mdi-delete</v-icon>
             </v-btn>
         </v-card-text>
@@ -45,7 +45,7 @@ export default {
     computed: mapGetters(['currentService']),
     methods: {
         ...mapActions(['deleteService', 'updateService']),
-        ...mapMutations(['setCurrentService']),
+        ...mapMutations(['setCurrentService', 'stopLoading']),
         cancelEdit(){
             this.name = this.service.name
             this.editing = false
@@ -59,7 +59,11 @@ export default {
             this.updateService({
                 id: this.service.id,
                 name: this.name
-            })
+            }).then(() => this.stopLoading())
+        },
+        deleteHandler() {
+            this.deleteService(this.service.id)
+                .then(() => this.stopLoading())
         }
     }
 }

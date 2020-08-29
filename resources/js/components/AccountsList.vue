@@ -1,8 +1,10 @@
 <template>
     <v-card class="fill-height">
         <v-card-title class="d-flex justify-space-between">
-            <span>Accounts List</span>
-            <span>Service: {{ current }}</span>
+            <span class="text-uppercase">Accounts List</span>
+            <span>
+                Service: {{ current | toUpperCase }}
+            </span>
         </v-card-title>
         <v-card-text>
             <div v-if="accountsByService.length > 0" class="pass-item-wrapper custom-scroll">
@@ -24,6 +26,11 @@ import { mapGetters } from 'vuex'
 export default {
     name: "AccountsList",
     components: { AccountItem },
+    filters: {
+        toUpperCase(value) {
+            return value.toUpperCase(value)
+        }
+    },
     computed: {
         ...mapGetters(['accountsByService', 'currentService']),
         current () {

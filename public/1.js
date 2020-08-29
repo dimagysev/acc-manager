@@ -152,13 +152,13 @@ var render = function() {
         "v-card-actions",
         { staticClass: "justify-center" },
         [
+          _c("v-spacer"),
+          _vm._v(" "),
           _c(
             "v-btn",
             { attrs: { color: "primary" }, on: { click: _vm.login } },
             [_vm._v("Login")]
           ),
-          _vm._v(" "),
-          _c("v-spacer"),
           _vm._v(" "),
           _c(
             "v-btn",

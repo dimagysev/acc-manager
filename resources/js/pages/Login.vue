@@ -28,8 +28,8 @@
             </v-form>
         </v-card-text>
         <v-card-actions class="justify-center">
-            <v-btn color="primary" @click="login">Login</v-btn>
             <v-spacer></v-spacer>
+            <v-btn color="primary" @click="login">Login</v-btn>
             <v-btn color="secondary" @click="$router.push('/register')">SingUp</v-btn>
         </v-card-actions>
     </v-card>

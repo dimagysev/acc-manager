@@ -62,12 +62,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return !(this.login === this.account.login && this.password === this.account.password);
     }
   },
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['deleteAccount', 'updateAccount'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['deleteAccount', 'updateAccount'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['stopLoading'])), {}, {
     reset: function reset() {
       this.login = this.account.login;
       this.password = this.account.password;
     },
-    update: function update() {
+    updateHandler: function updateHandler() {
       if (this.login.trim() === '' || this.password.trim() === '') {
         this.reset();
         return;
@@ -81,6 +81,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         id: this.account.id,
         login: this.login,
         password: this.password
+      });
+    },
+    deleteHandler: function deleteHandler() {
+      var _this = this;
+
+      this.deleteAccount(this.account.id).then(function () {
+        return _this.stopLoading();
       });
     }
   })
@@ -123,12 +130,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AccountsList",
   components: {
     AccountItem: _AccountItem__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  filters: {
+    toUpperCase: function toUpperCase(value) {
+      return value.toUpperCase(value);
+    }
   },
   computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['accountsByService', 'currentService'])), {}, {
     current: function current() {
@@ -203,12 +217,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['currentService']),
-  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['deleteService', 'updateService'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['setCurrentService'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['deleteService', 'updateService'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['setCurrentService', 'stopLoading'])), {}, {
     cancelEdit: function cancelEdit() {
       this.name = this.service.name;
       this.editing = false;
     },
     doneEdit: function doneEdit() {
+      var _this = this;
+
       if (this.name.trim() === '' || this.name === this.service.name) {
         this.cancelEdit();
         return;
@@ -218,6 +234,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.updateService({
         id: this.service.id,
         name: this.name
+      }).then(function () {
+        return _this.stopLoading();
+      });
+    },
+    deleteHandler: function deleteHandler() {
+      var _this2 = this;
+
+      this.deleteService(this.service.id).then(function () {
+        return _this2.stopLoading();
       });
     }
   })
@@ -304,6 +329,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_AccountsList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/AccountsList */ "./resources/js/components/AccountsList.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _components_loaders_Loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/loaders/Loader */ "./resources/js/components/loaders/Loader.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -322,25 +353,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Main",
-  data: function data() {
-    return {
-      loading: true
-    };
-  },
   components: {
     ServiceList: _components_ServiceList__WEBPACK_IMPORTED_MODULE_0__["default"],
     AccountsList: _components_AccountsList__WEBPACK_IMPORTED_MODULE_1__["default"],
     Loader: _components_loaders_Loader__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  methods: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['getServices', 'getAccounts']),
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['isLoading']),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['getServices', 'getAccounts'])), Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(['startLoading', 'stopLoading'])),
   mounted: function mounted() {
     var _this = this;
 
     this.getServices().then(function () {
       return _this.getAccounts();
     }).then(function () {
-      return _this.loading = false;
-    });
+      return _this.stopLoading();
+    })["catch"](function (e) {});
   }
 });
 
@@ -415,7 +442,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.loader-wrap[data-v-4f9f7f26]{\n    position: fixed; /* Sit on top of the page content */\n    width: 100%; /* Full width (cover the whole page) */\n    height: 100%; /* Full height (cover the whole page) */\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    z-index: 9999;\n}\n.lds-ring[data-v-4f9f7f26] {\n    display: inline-block;\n    position: relative;\n    width: 80px;\n    height: 80px;\n}\n.lds-ring div[data-v-4f9f7f26] {\n    box-sizing: border-box;\n    display: block;\n    position: absolute;\n    width: 64px;\n    height: 64px;\n    margin: 8px;\n    border: 8px solid #cef;\n    border-radius: 50%;\n    -webkit-animation: lds-ring-data-v-4f9f7f26 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n            animation: lds-ring-data-v-4f9f7f26 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n    border-color: #cef transparent transparent transparent;\n}\n.lds-ring div[data-v-4f9f7f26]:nth-child(1) {\n    -webkit-animation-delay: -0.45s;\n            animation-delay: -0.45s;\n}\n.lds-ring div[data-v-4f9f7f26]:nth-child(2) {\n    -webkit-animation-delay: -0.3s;\n            animation-delay: -0.3s;\n}\n.lds-ring div[data-v-4f9f7f26]:nth-child(3) {\n    -webkit-animation-delay: -0.15s;\n            animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring-data-v-4f9f7f26 {\n0% {\n        transform: rotate(0deg);\n}\n100% {\n        transform: rotate(360deg);\n}\n}\n@keyframes lds-ring-data-v-4f9f7f26 {\n0% {\n        transform: rotate(0deg);\n}\n100% {\n        transform: rotate(360deg);\n}\n}\n", ""]);
+exports.push([module.i, "\n.loader-wrap[data-v-4f9f7f26]{\n    position: fixed; /* Sit on top of the page content */\n    width: 100%; /* Full width (cover the whole page) */\n    height: 100%; /* Full height (cover the whole page) */\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    z-index: 9999;\n}\n.lds-ring[data-v-4f9f7f26] {\n    display: inline-block;\n    position: relative;\n    width: 80px;\n    height: 80px;\n}\n.lds-ring div[data-v-4f9f7f26] {\n    box-sizing: border-box;\n    display: block;\n    position: absolute;\n    width: 64px;\n    height: 64px;\n    margin: 8px;\n    border: 8px solid #7d898f;\n    border-radius: 50%;\n    -webkit-animation: lds-ring-data-v-4f9f7f26 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n            animation: lds-ring-data-v-4f9f7f26 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n    border-color: #7d898f transparent transparent transparent;\n}\n.lds-ring div[data-v-4f9f7f26]:nth-child(1) {\n    -webkit-animation-delay: -0.45s;\n            animation-delay: -0.45s;\n}\n.lds-ring div[data-v-4f9f7f26]:nth-child(2) {\n    -webkit-animation-delay: -0.3s;\n            animation-delay: -0.3s;\n}\n.lds-ring div[data-v-4f9f7f26]:nth-child(3) {\n    -webkit-animation-delay: -0.15s;\n            animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring-data-v-4f9f7f26 {\n0% {\n        transform: rotate(0deg);\n}\n100% {\n        transform: rotate(360deg);\n}\n}\n@keyframes lds-ring-data-v-4f9f7f26 {\n0% {\n        transform: rotate(0deg);\n}\n100% {\n        transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -599,11 +626,7 @@ var render = function() {
             "v-btn",
             {
               attrs: { "x-small": "", color: "error" },
-              on: {
-                click: function($event) {
-                  return _vm.deleteAccount(_vm.account.id)
-                }
-              }
+              on: { click: _vm.deleteHandler }
             },
             [_vm._v("Delete")]
           ),
@@ -617,7 +640,7 @@ var render = function() {
                     "v-btn",
                     {
                       attrs: { "x-small": "", color: "accent" },
-                      on: { click: _vm.update }
+                      on: { click: _vm.updateHandler }
                     },
                     [_vm._v("Update")]
                   )
@@ -677,9 +700,17 @@ var render = function() {
     { staticClass: "fill-height" },
     [
       _c("v-card-title", { staticClass: "d-flex justify-space-between" }, [
-        _c("span", [_vm._v("Accounts List")]),
+        _c("span", { staticClass: "text-uppercase" }, [
+          _vm._v("Accounts List")
+        ]),
         _vm._v(" "),
-        _c("span", [_vm._v("Service: " + _vm._s(_vm.current))])
+        _c("span", [
+          _vm._v(
+            "\n            Service: " +
+              _vm._s(_vm._f("toUpperCase")(_vm.current)) +
+              "\n        "
+          )
+        ])
       ]),
       _vm._v(" "),
       _c("v-card-text", [
@@ -825,7 +856,7 @@ var render = function() {
               on: {
                 click: function($event) {
                   $event.stopPropagation()
-                  return _vm.deleteService(_vm.service.id)
+                  return _vm.deleteHandler($event)
                 }
               }
             },
@@ -874,7 +905,7 @@ var render = function() {
           _c(
             "v-btn",
             {
-              attrs: { "x-small": "", color: "error" },
+              attrs: { small: "", color: "primary" },
               on: {
                 click: function($event) {
                   return _vm.setCurrentService("all")
@@ -981,7 +1012,7 @@ var render = function() {
     "v-row",
     { staticClass: "fill-height" },
     [
-      _vm.loading ? _c("loader") : _vm._e(),
+      _vm.isLoading ? _c("loader") : _vm._e(),
       _vm._v(" "),
       _c(
         "v-col",

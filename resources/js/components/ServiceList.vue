@@ -2,7 +2,7 @@
     <v-card class="fill-height">
         <v-card-title class="d-flex justify-space-between">
             <span>Service List</span>
-            <v-btn x-small color="error" @click="setCurrentService('all')">All</v-btn>
+            <v-btn small color="primary" @click="setCurrentService('all')">All</v-btn>
         </v-card-title>
         <v-card-text>
             <div v-if="services.length > 0" class="pass-item-wrapper custom-scroll">

@@ -28,33 +28,40 @@ export const service ={
     actions: {
         async getServices ({ commit }) {
             try {
+                commit('startLoading')
                 const response = await axios.get('/api/services')
                 const data = await response.data
                 commit('setServices', data)
             }catch (e){
                 commit('setError', e)
+                throw e
             }
         },
         async createService ({ commit }, service) {
             try {
+                commit('startLoading')
                 const response = await axios.post('/api/services', service)
                 const data = await response.data
                 commit('addService', data)
             } catch (e){
                 commit('setError', e)
+                throw e
             }
         },
         async updateService({ commit }, service){
             try{
+                commit('startLoading')
                 const response = await axios.put('/api/services/' + service.id, { name : service.name })
                 const data = await response.data
                 commit('updateService', data)
             }catch (e){
                 commit('setError', e)
+                throw e
             }
         },
         async deleteService ({ commit, dispatch }, serviceId) {
             try {
+                commit('startLoading')
                 const response = await axios.delete('/api/services/' + serviceId)
                 const data = await response.data
                 commit('deleteService', data.id)
@@ -62,6 +69,7 @@ export const service ={
                 dispatch('getAccounts')
             } catch (e){
                 commit('setError', e)
+                throw e
             }
         },
     }
