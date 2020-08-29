@@ -1,0 +1,126 @@
+GET http://pass-manager.loc/sanctum/csrf-cookie?email=jvon@example.org&password=password
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: Bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+###
+
+GET http://pass-manager.loc/api/user?email=jvon@example.org&password=password
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: Bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+<> 2020-08-25T093813.200.json
+
+###
+
+POST http://pass-manager.loc/api/login?email=jvon@example.org&password=password
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: Bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+<> 2020-08-25T093709.200.html
+
+###
+
+POST http://pass-manager.loc/api/user?email=jvon@example.org&password=password
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: Bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+<> 2020-08-25T093657.405.json
+
+###
+
+GET http://pass-manager.loc/api/user
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: Bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+<> 2020-08-25T093245.200.json
+
+###
+
+GET http://pass-manager.loc/api/user
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: Bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+<> 2020-08-25T093244.200.json
+
+###
+
+GET http://pass-manager.loc/api/user
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: Bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+<> 2020-08-25T093138.200.json
+
+###
+
+GET http://pass-manager.loc/api/user
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: Bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+<> 2020-08-25T093112.200.json
+
+###
+
+GET http://pass-manager.loc/api/user
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: Bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+<> 2020-08-25T093049.200.json
+
+###
+
+GET http://pass-manager.loc/api/user
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: Bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+<> 2020-08-25T092324.200.json
+
+###
+
+GET http://pass-manager.loc/api/user
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+Authorization: bearer 0NdMMklOEWP8U5SUizSrCH5hMhpISUfHXdujb5bJ2HpSD6EeAcPYeIMZPgrab8V1ct9nHsvQdR1lUFCQ
+
+<> 2020-08-25T092259.401.json
+
+###
+
+POST http://pass-manager.loc/api/login?email=jvon@example.org&password=password
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+
+<> 2020-08-25T091840.200.html
+
+###
+
+POST http://pass-manager.loc/api/login?email=jvon@example.org&password=password
+Accept: */*
+Cache-Control: no-cache
+Accept: application/json
+
+<> 2020-08-25T091816.404.json
+
+###
+

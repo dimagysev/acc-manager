@@ -1,0 +1,42 @@
+@import "~vuetify/dist/vuetify.min.css";
+
+body{
+    margin: 0;
+    padding: 0;
+    &::-webkit-scrollbar-track {
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: #f0f2f5;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+        background: #6a7d9b;
+    }
+}
+
+.custom-scroll {
+    &::-webkit-scrollbar-track {
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: #f0f2f5;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+        background: #6a7d9b;
+    }
+}
+
+.item{
+    width: 100%;
+    padding: 1rem;
+    margin: 10px 0;
+    background: #E3F2FD;
+}
